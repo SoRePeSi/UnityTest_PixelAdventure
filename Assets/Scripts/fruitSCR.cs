@@ -7,9 +7,9 @@ public class fruitSCR : MonoBehaviour{
 	public string fruitType;
 	Animator anim;
 	public Text scoreboard;
-	public Canvas can;
-	int pointWorth;
+	public int pointWorth;
 	
+	public popUpSCR popupScript;
 	playerSCR playerScript;
 	
     // Start is called before the first frame update
@@ -19,7 +19,6 @@ public class fruitSCR : MonoBehaviour{
         SetType();
 		
 		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<playerSCR>();
-		can = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Canvas>();
 		scoreboard = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Text>();
     }
 	
@@ -64,10 +63,12 @@ public class fruitSCR : MonoBehaviour{
 			playerScript.score += this.pointWorth;
 			string txt = "\n\n		SCORE: " + playerScript.score;
 			scoreboard.text = txt;
+			popupScript.enabled = true;
 		}
 	}
 	
-	void DestroyFruit(){
-		Destroy(gameObject);
+	public void Collect(){
+		GetComponent<Collider2D>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
 	}
 }

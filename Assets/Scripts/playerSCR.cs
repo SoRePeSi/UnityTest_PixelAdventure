@@ -12,10 +12,14 @@ public class playerSCR : MonoBehaviour{
 	public int jumpAmount = 2;
 	public int score = 0;
 	public bool canMove = true;
+	public bool isGrounded = true;
 	
 	public Vector3 SpawnPoint;
 	
-    // Start is called before the first frame update
+	public GameObject interactObj;
+	
+	List<string> groundingTags = new List<string>() {"HorizontalOneWay", "Floor", "HorizontalPlatform"};
+	
     void Start(){
         rig = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
@@ -23,7 +27,6 @@ public class playerSCR : MonoBehaviour{
 		Spawn();
     }
 
-    // Update is called once per frame
     void Update(){
 		Move();
 		Jump();
@@ -31,56 +34,66 @@ public class playerSCR : MonoBehaviour{
 	
 	void Move(){
 		Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+		
 		if(canMove){
 			transform.position += movement * Time.deltaTime * Speed;
-			if(Input.GetAxis("Horizontal")>0f){
+			if(Input.GetAxis("Horizontal") > 0f){
 				anim.SetBool("run", true);
 				transform.eulerAngles = new Vector3(0f,0f,0f);
 			}
-			if(Input.GetAxis("Horizontal")==0f){
+			if(Input.GetAxis("Horizontal") == 0f){
 				anim.SetBool("run", false);
 			}
-			if(Input.GetAxis("Horizontal")<0f){
+			if(Input.GetAxis("Horizontal") < 0f){
 				anim.SetBool("run", true);
 				transform.eulerAngles = new Vector3(0f,180f,0f);
 			}
 		}
 		
-		if(this.transform.position.y<-5){
+		if(this.transform.position.y < -5){
 			Spawn();
 		}
 	}
 	
 	void Jump(){
-		if(jumpAmount>0){
+		string[] jumpType = {"", "doubleJump", "jump"};
+		if(jumpAmount > 0){
 			if(Input.GetButtonDown("Jump")){
+				rig.velocity = new Vector2(rig.velocity.x, 0f);
 				rig.AddForce(new Vector2(0f, Jumpforce), ForceMode2D.Impulse);
+				anim.SetBool(jumpType[jumpAmount], true);
+				jumpAmount--;
+				isGrounded = false;
+			}
+		}
+		
+		if(!isGrounded){
+			if(jumpAmount == 2){
 				jumpAmount--;
 			}
 		}
-		if(rig.velocity.y>0f){
-			if(jumpAmount==1){
-				anim.SetBool("jump", true);
-			}
-			else{
-				anim.SetBool("doubleJump", true);
-			}
-			anim.SetBool("fall", false);
-		}
-		if(rig.velocity.y<0f){
+		if(rig.velocity.y < 0f){
 			anim.SetBool("fall", true);
 			anim.SetBool("doubleJump", false);
 			anim.SetBool("jump", false);
 		}
-		if(rig.velocity.y==0f){
-			anim.SetBool("jump", false);
+		
+		if(isGrounded){
+			jumpAmount = 2;
+			
 			anim.SetBool("doubleJump", false);
 			anim.SetBool("fall", false);
-			jumpAmount = 2;
+			anim.SetBool("jump", false);
 		}
 	}
 
 	void Spawn(){
 		transform.position = SpawnPoint;
+	}
+	
+	void OnCollisionEnter2D(Collision2D other){
+		if(groundingTags.Exists(x => x == other.gameObject.tag)){
+			isGrounded = true;
+		}
 	}
 }

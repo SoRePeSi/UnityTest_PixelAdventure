@@ -8,6 +8,10 @@ TagManager:
   - CP
   - MainCanvas
   - Semisolid
+  - Wall
+  - HorizontalOneWay
+  - HorizontalPlatform
+  - NPC
   layers:
   - Default
   - TransparentFX

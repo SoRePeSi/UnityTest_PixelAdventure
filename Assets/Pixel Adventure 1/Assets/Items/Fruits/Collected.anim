@@ -21,21 +21,21 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: -4801923697170587870, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
-    - time: 0.033333335
+    - time: 0.05
       value: {fileID: -8008818501793099674, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
-    - time: 0.06666667
-      value: {fileID: -5647853031727683852, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
     - time: 0.1
+      value: {fileID: -5647853031727683852, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
+    - time: 0.15
       value: {fileID: 6868876828740441722, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
-    - time: 0.13333334
+    - time: 0.2
       value: {fileID: -3443555461527096104, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
-    - time: 0.16666667
+    - time: 0.25
       value: {fileID: 2831489644526101201, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 30
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -61,7 +61,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.2
+    m_StopTime: 0.3
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -81,8 +81,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.2
-    functionName: DestroyFruit
+  - time: 0.3
+    functionName: Collect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
